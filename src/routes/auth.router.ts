@@ -6,6 +6,7 @@ import {
   registerValidator,
   loginValidator,
 } from "../validators/auth.validator";
+import { authenticate } from "../middlewares/auth.middleware";
 
 @injectable()
 export class AuthRouter {
@@ -20,7 +21,7 @@ export class AuthRouter {
     this.router.post(
       "/register",
       registerValidator,
-      (req: Request, res: Response): Promise<void> => {
+      async (req: Request, res: Response): Promise<void> => {
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
@@ -33,12 +34,33 @@ export class AuthRouter {
     this.router.post(
       "/login",
       loginValidator,
-      (req: Request, res: Response): Promise<void> => {
+      async (req: Request, res: Response): Promise<void> => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
           res.status(400).json(errors.array());
         }
         return this.authController.handleLogin(req, res);
+      }
+    );
+
+    this.router.post(
+      "/logout",
+      authenticate,
+      async (req: Request, res: Response): Promise<void> => {
+        await this.authController.handleLogout(req, res);
+      }
+    );
+
+    this.router.get(
+      "/me",
+      authenticate,
+      (req: Request, res: Response): Promise<void> => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          res.status(400).json(errors.array());
+        }
+        console.log(req)
+        return this.authController.handleMe(req, res);
       }
     );
   }
