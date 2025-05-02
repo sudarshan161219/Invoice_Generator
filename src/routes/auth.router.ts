@@ -2,6 +2,7 @@ import { Router, Request, Response } from "express";
 import { injectable, inject } from "inversify";
 import { validationResult } from "express-validator";
 import { AuthController } from "../controllers/auth.controller";
+import { TYPES } from "../types/types";
 import {
   registerValidator,
   loginValidator,
@@ -12,7 +13,7 @@ import { authenticate } from "../middlewares/auth.middleware";
 export class AuthRouter {
   public router: Router;
 
-  constructor(@inject(AuthController) private authController: AuthController) {
+  constructor(@inject(TYPES.AuthController) private authController: AuthController) {
     this.router = Router();
     this.initializeRoutes();
   }
@@ -59,7 +60,7 @@ export class AuthRouter {
         if (!errors.isEmpty()) {
           res.status(400).json(errors.array());
         }
-        console.log(req)
+        console.log(req);
         return this.authController.handleMe(req, res);
       }
     );

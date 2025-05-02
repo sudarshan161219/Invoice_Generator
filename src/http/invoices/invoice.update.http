@@ -1,0 +1,15 @@
+@baseUrl = http://localhost:3000
+@token = {{"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc0NjEwODI0OCwiZXhwIjoxNzQ2MTk0NjQ4fQ.7BKosFly9Rx-3ne-ZhmI45HcSssusQik6JS6Ez-f3iA"}}
+
+
+PUT {{baseUrl}}/invoices/update-invoice/2
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+
+{
+  "clientName": "Mark Doe has paid",
+  "amount": 2200.75,
+  "dueDate": "2025-06-10T00:00:00Z",
+  "paid": true
+}

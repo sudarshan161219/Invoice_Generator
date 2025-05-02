@@ -39,21 +39,17 @@ export class App {
     try {
       await this.prisma.$connect();
       console.log("Connected to PostgreSQL database");
+      this.app.listen(this.port, () => {
+        console.log(`🚀 Server running at http://localhost:${this.port}`);
+      });
     } catch (error) {
       console.error("Failed to connect to the database", error);
       process.exit(1);
     }
   }
 
-  private listen() {
-    this.app.listen(this.port, () => {
-      console.log(`🚀 Server running at http://localhost:${this.port}`);
-    });
-  }
-
   public start() {
     this.bootstrap(); // Connect to the database first, then start the server
-    this.listen();
   }
 }
 

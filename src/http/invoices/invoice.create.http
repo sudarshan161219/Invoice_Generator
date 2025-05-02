@@ -1,0 +1,15 @@
+@baseUrl = http://localhost:3000
+@token = {{"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc0NjEwODI0OCwiZXhwIjoxNzQ2MTk0NjQ4fQ.7BKosFly9Rx-3ne-ZhmI45HcSssusQik6JS6Ez-f3iA"}}
+
+
+
+### ✅ Create Invoice
+POST {{baseUrl}}/invoices/create-invoice
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "clientName": "salman bhai",
+  "amount": 500.50,
+  "dueDate": "2025-06-01T00:00:00Z"
+}
