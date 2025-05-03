@@ -12,9 +12,16 @@ export class InvoiceController {
   async handleCreateInvoice(req: Request, res: Response) {
     try {
       const userId = req.user?.userId;
+      const { clientId, ...data } = req.body;
       if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      if (!clientId)
+        return res.status(400).json({ message: "Client ID is required" });
 
-      const invoice = await this.invoiceService.create(userId, req.body);
+      const invoice = await this.invoiceService.create(
+        userId,
+        clientId,
+        req.body
+      );
       res.status(201).json(invoice);
     } catch (error) {
       res.status(500).json({
@@ -56,6 +63,6 @@ export class InvoiceController {
     if (!userId) return res.status(401).json({ message: "Unauthorized" });
     const id = parseInt(req.params.id);
     const deleted = await this.invoiceService.delete(id, userId);
-    res.json({ message: "Deleted", deleted });
+    res.json({ message: "Invoice Deleted", deleted });
   }
 }

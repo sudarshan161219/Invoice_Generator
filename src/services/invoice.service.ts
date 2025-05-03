@@ -45,8 +45,8 @@ export class InvoiceService {
   }
 
   async delete(id: number, userId: number) {
-    return prisma.invoice.deleteMany({
-      where: { id, userId },
+    return prisma.invoice.delete({
+      where: { id_userId: { id, userId } },
     });
   }
 }

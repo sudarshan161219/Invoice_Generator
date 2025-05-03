@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:3000
-@token = {{"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc0NjEwODI0OCwiZXhwIjoxNzQ2MTk0NjQ4fQ.7BKosFly9Rx-3ne-ZhmI45HcSssusQik6JS6Ez-f3iA"}}
+@token = {{"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc0NjIzNjAyMiwiZXhwIjoxNzQ4ODI4MDIyfQ.Jc8lf2Ipx2NnB1X5DVBt4KpTdCfadge-lqh8ZvKvHUY"}}
 
 
 PUT {{baseUrl}}/invoices/update-invoice/2

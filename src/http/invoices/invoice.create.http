@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:3000
-@token = {{"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc0NjEwODI0OCwiZXhwIjoxNzQ2MTk0NjQ4fQ.7BKosFly9Rx-3ne-ZhmI45HcSssusQik6JS6Ez-f3iA"}}
+@token = {{"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc0NjIzNjAyMiwiZXhwIjoxNzQ4ODI4MDIyfQ.Jc8lf2Ipx2NnB1X5DVBt4KpTdCfadge-lqh8ZvKvHUY"}}
 
 
 
@@ -9,7 +9,8 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "clientName": "salman bhai",
-  "amount": 500.50,
+  "clientName": "Mark",
+  "client": 1,
+  "amount": 1500.50,
   "dueDate": "2025-06-01T00:00:00Z"
 }

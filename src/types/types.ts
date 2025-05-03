@@ -5,4 +5,7 @@ export const TYPES = {
   InvoiceService: Symbol.for("InvoiceService"),
   InvoiceController: Symbol.for("InvoiceController"),
   InvoiceRouter: Symbol.for("InvoiceRouter"),
+  ClientService: Symbol.for("ClientService"),
+  ClientController: Symbol.for("ClientController"),
+  ClientRouter: Symbol.for("ClientRouter"),
 };
