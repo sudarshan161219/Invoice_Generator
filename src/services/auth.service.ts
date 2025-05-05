@@ -2,9 +2,8 @@ import { injectable } from "inversify";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { IRegisterDTO, ILoginDTO } from "../types/auth.types";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../utils/prismaClient"; 
 
-const prisma = new PrismaClient();
 
 @injectable()
 export class AuthService {

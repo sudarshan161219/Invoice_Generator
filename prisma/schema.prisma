@@ -1,12 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  output = "../../node_modules/.prisma/client"
+  output   = "../../node_modules/.prisma/client"
 }
 
 datasource db {
@@ -14,32 +8,29 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
 model Invoice {
   id         Int      @id @default(autoincrement())
   userId     Int
   clientName String
-  clientId   Int     
-  client     Client   @relation(fields: [clientId], references: [id]) 
+  clientId   Int
   amount     Float
   dueDate    DateTime
   paid       Boolean  @default(false)
   createdAt  DateTime @default(now())
-
-  user User @relation(fields: [userId], references: [id])
-
+  client     Client   @relation(fields: [clientId], references: [id])
+  user       User     @relation(fields: [userId], references: [id])
+ payments   Payment[] 
   @@unique([id, userId])
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  name     String
-  email    String @unique
-  password String
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String    @unique
+  password  String
+  createdAt DateTime  @default(now())
+  clients   Client[]
   invoices  Invoice[]
-  clients  Client[]
-  createdAt DateTime @default(now())
 }
 
 model Client {
@@ -49,10 +40,23 @@ model Client {
   phone     String?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-
   userId    Int
   user      User      @relation(fields: [userId], references: [id])
-  invoices  Invoice[] 
-   
+  invoices  Invoice[]
+
   @@unique([id, userId])
 }
+
+
+
+model Payment {
+  id        Int      @id @default(autoincrement())
+  amount    Float
+  paidAt    DateTime @default(now())
+  method    String   // e.g., "cash", "bank", "credit"
+  note      String?  // optional notes
+  invoice   Invoice  @relation(fields: [invoiceId], references: [id])
+  invoiceId Int
+}
+
+

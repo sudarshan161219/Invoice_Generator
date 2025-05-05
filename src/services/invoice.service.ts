@@ -1,8 +1,6 @@
 import { injectable } from "inversify";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../utils/prismaClient";
 import { ICreateInvoiceDTO } from "../types/invoice.types";
-
-const prisma = new PrismaClient();
 
 @injectable()
 export class InvoiceService {
