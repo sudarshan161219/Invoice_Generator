@@ -17,7 +17,7 @@ export class ClientRouter {
 
   private registerRoutes() {
     this.router.post(
-      "/",
+      "/create",
       authenticate,
       (req: Request, res: Response) => {
         this.clientController.handleCreateClient(req, res);
@@ -40,7 +40,7 @@ export class ClientRouter {
       this.clientController.handleUpdate(req, res);
     });
 
-    this.router.put("/:id", authenticate, (req, res) => {
+    this.router.put("/delete/:id", authenticate, (req, res) => {
       this.clientController.handleDelete(req, res);
     });
   }

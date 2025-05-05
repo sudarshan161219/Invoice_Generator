@@ -1,0 +1,42 @@
+@baseUrl = http://localhost:3000
+@token = {{"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc0NjQwNzQ2NCwiZXhwIjoxNzQ4OTk5NDY0fQ.yVF-LA8V27Oi9_2lDSxHp7Qu1Q-v5_Mk_Zd7phY2J-o"}}
+
+
+### Create a new client
+POST {{baseUrl}}/clients/create
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Delete Doe",
+  "email": "Delete@example.com",
+  "phone": "1789528469"
+}
+
+
+### Get all clients
+GET {{baseUrl}}/clients/
+Authorization: Bearer {{token}}
+
+
+### Get a client by ID
+GET {{baseUrl}}/clients/1
+Authorization: Bearer {{token}}
+
+
+
+### Update a client
+PUT {{baseUrl}}/clients/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "John Updated",
+  "email": "john.updated@example.com",
+  "phone": "9876543210"
+}
+
+
+### Delete a client
+PUT {{baseUrl}}/clients/delete/3
+Authorization: Bearer {{token}}

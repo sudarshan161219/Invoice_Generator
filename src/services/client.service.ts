@@ -26,8 +26,7 @@ export class ClientService {
     });
   }
   async update(id: number, data: any, userId: number) {
-    const client = await prisma.invoice.findFirst({ where: { id, userId } });
-
+    const client = await prisma.client.findFirst({ where: { id, userId } });
     if (!client) throw new Error("Client not found or unauthorized");
 
     return prisma.client.update({
