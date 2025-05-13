@@ -17,9 +17,10 @@ model Invoice {
   dueDate    DateTime
   paid       Boolean  @default(false)
   createdAt  DateTime @default(now())
-  client     Client   @relation(fields: [clientId], references: [id])
-  user       User     @relation(fields: [userId], references: [id])
+  client     Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
  payments   Payment[] 
+  @@index([userId])
   @@unique([id, userId])
 }
 
@@ -43,7 +44,7 @@ model Client {
   userId    Int
   user      User      @relation(fields: [userId], references: [id])
   invoices  Invoice[]
-
+  @@index([userId])
   @@unique([id, userId])
 }
 
@@ -55,7 +56,9 @@ model Payment {
   paidAt    DateTime @default(now())
   method    String   // e.g., "cash", "bank", "credit"
   note      String?  // optional notes
-  invoice   Invoice  @relation(fields: [invoiceId], references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  invoice   Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
   invoiceId Int
 }
 

@@ -1,0 +1,38 @@
+@baseUrl = http://localhost:3000
+@token = {{"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc0NjUxMTU0MiwiZXhwIjoxNzQ5MTAzNTQyfQ.HIAbG8kdXPI6lXBBOgcB-SLw7T5VsCBjrpEVRitgC50"}}
+
+
+### ✅ Create Payment
+POST {{baseUrl}}/payment/create
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "invoiceId": 3,
+  "amount": 1000.00,
+  "method": "bank",
+  "note": "First installment"
+}
+
+
+### ✅ Get All Payment
+GET {{baseUrl}}/payment/3
+Authorization: Bearer {{token}}
+
+
+
+### ✅ Update Payment
+PUT {{baseUrl}}/payment/update/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+{
+  "method": "Online",
+  "note": "First installment"
+}
+
+
+### ✅ Delete Payment
+PUT {{baseUrl}}/payment/delete/1
+Authorization: Bearer {{token}}
+
+

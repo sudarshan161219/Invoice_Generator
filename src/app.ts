@@ -1,8 +1,10 @@
 import express, { Request, Response, Express, Application } from "express";
 import cors, { CorsOptions } from "cors";
+import cookieParser from "cookie-parser";
 import * as dotenv from "dotenv";
 import { PrismaClient } from "@prisma/client";
 import { addRoutes } from "./config/routes.config";
+import { errorMiddleware } from "./middlewares/error.middleware";
 
 export class App {
   public app: Application;
@@ -17,11 +19,22 @@ export class App {
 
     this.initializeMiddlewares();
     this.initializeRoutes();
+    this.initializeErrorHandling();
   }
 
   private initializeMiddlewares() {
-    this.app.use(cors());
+    this.app.use(
+      cors({
+        origin: "http://localhost:5173",
+        credentials: true,
+      })
+    );
     this.app.use(express.json());
+    this.app.use(cookieParser());
+  }
+
+  private initializeErrorHandling() {
+    this.app.use(errorMiddleware);
   }
 
   private initializeRoutes() {

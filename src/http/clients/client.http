@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:3000
-@token = {{"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc0NjQwNzQ2NCwiZXhwIjoxNzQ4OTk5NDY0fQ.yVF-LA8V27Oi9_2lDSxHp7Qu1Q-v5_Mk_Zd7phY2J-o"}}
+@token = {{"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc0NjUxMTU0MiwiZXhwIjoxNzQ5MTAzNTQyfQ.HIAbG8kdXPI6lXBBOgcB-SLw7T5VsCBjrpEVRitgC50"}}
 
 
 ### Create a new client
@@ -10,7 +10,7 @@ Content-Type: application/json
 {
   "name": "Delete Doe",
   "email": "Delete@example.com",
-  "phone": "1789528469"
+  "phone": "987456123"
 }
 
 
@@ -31,8 +31,8 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "name": "John Updated",
-  "email": "john.updated@example.com",
+  "name": "John Doe",
+  "email": "john.Doe@example.com",
   "phone": "9876543210"
 }
 

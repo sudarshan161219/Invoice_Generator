@@ -1,43 +1,59 @@
 import { injectable, inject } from "inversify";
-import { Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
+import { Request, Response, NextFunction } from "express";
 import { AuthService } from "../services/auth.service";
 import { TYPES } from "../types/types";
+import { AppError } from "../errors/AppError";
 
 @injectable()
 export class AuthController {
   constructor(@inject(TYPES.AuthService) private authService: AuthService) {}
 
-  async handleRegister(req: Request, res: Response) {
-    const result = await this.authService.register(req.body);
-    res.status(201).json(result);
+  async handleRegister(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await this.authService.register(req.body);
+      res.status(StatusCodes.CREATED).json(result);
+    } catch (error) {
+      next(error);
+    }
   }
 
-  async handleLogin(req: Request, res: Response) {
-    const result = await this.authService.login(req.body);
-    res.status(200).json(result);
+  async handleLogin(req: Request, res: Response, next: NextFunction) {
+    try {
+      // const result = await this.authService.login(req.body);
+      const { token, user } = await this.authService.login(req.body);
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+      });
+      res.status(StatusCodes.OK).json({ user });
+    } catch (error) {
+      next(error);
+    }
   }
 
-  async handleLogout(req: Request, res: Response) {
-    const result = await this.authService.login(req.body);
-    res.status(200).json(result);
+  async handleLogout(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await this.authService.logout();
+      res.status(StatusCodes.OK).json(result);
+    } catch (error) {
+      next(error);
+    }
   }
 
-  async handleMe(req: Request, res: Response) {
+  async handleMe(req: Request, res: Response, next: NextFunction) {
     try {
       const userId = req.user?.userId;
       if (!userId) {
-        res.status(401).json({ message: "Unauthorized" });
-        return;
+        throw new AppError("Unauthorized", StatusCodes.UNAUTHORIZED);
       }
 
       const user = await this.authService.me(userId);
-      res.status(200).json(user);
+      res.status(StatusCodes.OK).json(user);
     } catch (error) {
-      if (error instanceof Error) {
-        res.status(500).json({ message: error.message });
-      } else {
-        res.status(500).json({ message: "Unknown error" });
-      }
+      next(error);
     }
   }
 }

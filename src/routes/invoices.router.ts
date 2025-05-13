@@ -1,4 +1,4 @@
-import { Request, Response, Router } from "express";
+import { Request, Response, Router, NextFunction } from "express";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../types/types";
 import { InvoiceController } from "../controllers/invoice.controller";
@@ -19,29 +19,41 @@ export class InvoiceRouter {
     this.router.post(
       "/create-invoice",
       authenticate,
-      (req: Request, res: Response) => {
-        this.invoiceController.handleCreateInvoice(req, res);
+      (req: Request, res: Response, next: NextFunction) => {
+        this.invoiceController.handleCreateInvoice(req, res, next);
       }
     );
 
     this.router.get(
       "/get-invoices",
       authenticate,
-      (req: Request, res: Response) => {
-        this.invoiceController.handleGetAll(req, res);
+      (req: Request, res: Response, next: NextFunction) => {
+        this.invoiceController.handleGetAll(req, res, next);
       }
     );
 
-    this.router.get("/get-invoice/:id", authenticate, (req, res) => {
-      this.invoiceController.handleGetById(req, res);
-    });
+    this.router.get(
+      "/get-invoice/:id",
+      authenticate,
+      (req: Request, res: Response, next: NextFunction) => {
+        this.invoiceController.handleGetById(req, res, next);
+      }
+    );
 
-    this.router.put("/update-invoice/:id", authenticate, (req, res) => {
-      this.invoiceController.handleUpdate(req, res);
-    });
+    this.router.put(
+      "/update-invoice/:id",
+      authenticate,
+      (req: Request, res: Response, next: NextFunction) => {
+        this.invoiceController.handleUpdate(req, res, next);
+      }
+    );
 
-    this.router.put("/delete-invoice/:id", authenticate, (req, res) => {
-      this.invoiceController.handleDelete(req, res);
-    });
+    this.router.put(
+      "/delete-invoice/:id",
+      authenticate,
+      (req: Request, res: Response, next: NextFunction) => {
+        this.invoiceController.handleDelete(req, res, next);
+      }
+    );
   }
 }

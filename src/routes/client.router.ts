@@ -1,4 +1,4 @@
-import { Request, Response, Router } from "express";
+import { Request, Response, Router, NextFunction } from "express";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../types/types";
 import { ClientController } from "../controllers/client.controller";
@@ -19,29 +19,41 @@ export class ClientRouter {
     this.router.post(
       "/create",
       authenticate,
-      (req: Request, res: Response) => {
-        this.clientController.handleCreateClient(req, res);
+      (req: Request, res: Response, next: NextFunction) => {
+        this.clientController.handleCreateClient(req, res, next);
       }
     );
 
     this.router.get(
       "/",
       authenticate,
-      (req: Request, res: Response) => {
-        this.clientController.handleGetAll(req, res);
+      (req: Request, res: Response, next: NextFunction) => {
+        this.clientController.handleGetAll(req, res, next);
       }
     );
 
-    this.router.get("/:id", authenticate, (req, res) => {
-      this.clientController.handleGetById(req, res);
-    });
+    this.router.get(
+      "/:id",
+      authenticate,
+      (req: Request, res: Response, next: NextFunction) => {
+        this.clientController.handleGetById(req, res, next);
+      }
+    );
 
-    this.router.put("/:id", authenticate, (req, res) => {
-      this.clientController.handleUpdate(req, res);
-    });
+    this.router.put(
+      "/:id",
+      authenticate,
+      (req: Request, res: Response, next: NextFunction) => {
+        this.clientController.handleUpdate(req, res, next);
+      }
+    );
 
-    this.router.put("/delete/:id", authenticate, (req, res) => {
-      this.clientController.handleDelete(req, res);
-    });
+    this.router.put(
+      "/delete/:id",
+      authenticate,
+      (req: Request, res: Response, next: NextFunction) => {
+        this.clientController.handleDelete(req, res, next);
+      }
+    );
   }
 }
