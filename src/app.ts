@@ -10,22 +10,23 @@ export class App {
   public app: Application;
   public port: string | number;
   private prisma: PrismaClient;
-
+  public allowedOrigins: string[];
   constructor() {
     dotenv.config();
     this.app = express();
     this.port = process.env.PORT || 3000;
     this.prisma = new PrismaClient();
-
+    this.allowedOrigins = ["http://localhost:5173"];
     this.initializeMiddlewares();
     this.initializeRoutes();
     this.initializeErrorHandling();
   }
 
   private initializeMiddlewares() {
+    const { allowedOrigins } = this;
     this.app.use(
       cors({
-        origin: "http://localhost:5173",
+        origin: allowedOrigins,
         credentials: true,
       })
     );
@@ -38,9 +39,6 @@ export class App {
   }
 
   private initializeRoutes() {
-    this.app.get("/", (req, res) => {
-      res.send("API is working 🎉");
-    });
     addRoutes(this.app);
   }
 
@@ -62,7 +60,7 @@ export class App {
   }
 
   public start() {
-    this.bootstrap(); // Connect to the database first, then start the server
+    this.bootstrap();
   }
 }
 

@@ -74,7 +74,6 @@ export class AuthRouter {
         if (!errors.isEmpty()) {
           res.status(400).json(errors.array());
         }
-        // console.log(req);
         return this.authController.handleMe(req, res, next);
       }
     );

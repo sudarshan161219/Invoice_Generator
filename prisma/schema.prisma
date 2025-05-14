@@ -9,20 +9,28 @@ datasource db {
 }
 
 model Invoice {
-  id         Int      @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   userId     Int
-  clientName String
   clientId   Int
+  clientName String
   amount     Float
   dueDate    DateTime
-  paid       Boolean  @default(false)
-  createdAt  DateTime @default(now())
-  client     Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
- payments   Payment[] 
+  paid       Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+
+  // Optional: add a status field for better filtering and clarity
+  status     String?   @default("pending") // values can be "pending", "paid", "overdue"
+
+  // Relations
+  client     Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  payments   Payment[]
+
+  // Indexes
   @@index([userId])
   @@unique([id, userId])
 }
+
 
 model User {
   id        Int       @id @default(autoincrement())
