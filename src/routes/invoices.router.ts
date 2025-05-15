@@ -33,6 +33,14 @@ export class InvoiceRouter {
     );
 
     this.router.get(
+      "/get-invoices-stats",
+      authenticate,
+      (req: Request, res: Response, next: NextFunction) => {
+        this.invoiceController.handleGetInvoiceStats(req, res, next);
+      }
+    );
+
+    this.router.get(
       "/get-invoice/:id",
       authenticate,
       (req: Request, res: Response, next: NextFunction) => {

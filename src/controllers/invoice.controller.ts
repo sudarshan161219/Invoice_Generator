@@ -45,6 +45,19 @@ export class InvoiceController {
     }
   }
 
+  async handleGetInvoiceStats(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userId = req.user?.userId;
+      if (!userId) {
+        throw new AppError("Unauthorized", StatusCodes.UNAUTHORIZED);
+      }
+      const invoices = await this.invoiceService.getAll(userId);
+      res.status(StatusCodes.OK).json(invoices);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async handleGetById(req: Request, res: Response, next: NextFunction) {
     try {
       const userId = req.user?.userId;
